@@ -3,13 +3,10 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 import { initialState } from './constants'
 
 export const counterSlice = createSlice({
-    name: 'counter',
+    name: 'token',
     initialState,
     reducers: {
         setId: (state, action: PayloadAction<string>) => {
-            console.log(`state:`, state)
-            console.log(`action:`, action)
-
             state.id = action.payload
         }
     }

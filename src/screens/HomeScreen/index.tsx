@@ -7,13 +7,14 @@ import * as WebBrowser from 'expo-web-browser'
 import { styles } from './style'
 import { useAppDispatch, useAppSelector } from '../../store/hooks'
 import { setId } from '../../store'
+import { config } from '../../config'
 
 WebBrowser.maybeCompleteAuthSession()
 
 // import { logi } from '../../services/auth'
 const discovery = {
     authorizationEndpoint: 'https://accounts.spotify.com/authorize',
-    tokenEndpoint: 'http://localhost:3000/api/v1/token'
+    tokenEndpoint: `${config.REACT_SERVER_URL}api/v1/auth`
 }
 
 const HomeScreen = ({ navigation }) => {
@@ -43,7 +44,7 @@ const HomeScreen = ({ navigation }) => {
             // In order to follow the "Authorization Code Flow" to fetch token after authorizationEndpoint
             // this must be set to false
             usePKCE: false,
-            redirectUri: 'http://localhost:3000/api/v1/token'
+            redirectUri: `http://localhost:3000/api/v1/auth`
         },
         discovery
     )
@@ -51,6 +52,8 @@ const HomeScreen = ({ navigation }) => {
     useEffect(() => {
         if (response?.type === 'error') {
             const { accessTokenId } = response.params
+
+            
             dispatcher(setId(accessTokenId))
             // eslint-disable-next-line @typescript-eslint/no-unused-expressions
             accessTokenId ? navigation.navigate('Dashboard') : false

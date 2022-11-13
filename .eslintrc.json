@@ -16,9 +16,15 @@
             { "functions": true, "classes": true, "variables": false }
         ], // disable the rule for variables, but enable it for functions and classes
         "react/jsx-uses-react": "off",
-        "react/react-in-jsx-scope": "off"
+        "react/react-in-jsx-scope": "off",
+        "prettier/prettier": [
+            "error",
+            {
+                "endOfLine": "off"
+            }
+        ]
     },
     "settings": {
         "import/ignore": ["react-native"]
-      }
+    }
 }

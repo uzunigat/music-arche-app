@@ -1,20 +1,25 @@
-import { TouchableOpacity, View, Text } from 'react-native';
-import { StatusBar } from 'expo-status-bar';
-import { useEffect } from 'react';
-import { ResponseType, useAuthRequest } from 'expo-auth-session';
-import * as WebBrowser from 'expo-web-browser';
+import { TouchableOpacity, View, Text } from 'react-native'
+import { StatusBar } from 'expo-status-bar'
+import { useEffect } from 'react'
+import { ResponseType, useAuthRequest } from 'expo-auth-session'
+import * as WebBrowser from 'expo-web-browser'
 
-import { styles } from './style';
+import { styles } from './style'
+import { useAppDispatch, useAppSelector } from '../../store/hooks'
+import { setId } from '../../store'
 
-WebBrowser.maybeCompleteAuthSession();
+WebBrowser.maybeCompleteAuthSession()
 
 // import { logi } from '../../services/auth'
 const discovery = {
     authorizationEndpoint: 'https://accounts.spotify.com/authorize',
     tokenEndpoint: 'http://localhost:3000/api/v1/token'
-};
+}
 
 const HomeScreen = ({ navigation }) => {
+    const token = useAppSelector((state) => state.token)
+    const dispatcher = useAppDispatch()
+
     const [request, response, promptAsync] = useAuthRequest(
         {
             responseType: ResponseType.Code,
@@ -41,21 +46,22 @@ const HomeScreen = ({ navigation }) => {
             redirectUri: 'http://localhost:3000/api/v1/token'
         },
         discovery
-    );
+    )
 
     useEffect(() => {
         if (response?.type === 'error') {
-            const { accessTokenId } = response.params;
+            const { accessTokenId } = response.params
+            dispatcher(setId(accessTokenId))
             // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-            accessTokenId ? navigation.navigate('Dashboard') : false;
+            accessTokenId ? navigation.navigate('Dashboard') : false
         }
-    }, [navigation, response]);
+    }, [navigation, response])
 
     return (
         <View style={styles.container}>
             <TouchableOpacity
                 onPress={() => {
-                    if (request) promptAsync();
+                    if (request) promptAsync()
                 }}
                 style={styles.loginButtonContainer}
             >
@@ -71,7 +77,7 @@ const HomeScreen = ({ navigation }) => {
 
             <StatusBar style="auto" />
         </View>
-    );
-};
+    )
+}
 
-export default HomeScreen;
+export default HomeScreen

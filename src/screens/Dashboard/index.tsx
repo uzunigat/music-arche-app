@@ -1,7 +1,10 @@
-import { Text } from 'react-native';
+import { Text } from 'react-native'
+import { useAppDispatch, useAppSelector } from '../../store/hooks'
 
 const Dashboard = () => {
-    return <Text>Welcome</Text>;
-};
+    const token = useAppSelector((state) => state.token)
 
-export default Dashboard;
+    return <Text>Welcome</Text>
+}
+
+export default Dashboard

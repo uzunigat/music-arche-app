@@ -15,3 +15,5 @@ npm install
 ```code
 npm start
 ```
+
+You will see a expo command executed. Then you can open an emulator using `i` option.

@@ -56,7 +56,7 @@ const HomeScreen = ({ navigation }) => {
             dispatcher(setId(accessTokenId))
             dispatcher(setUserId(userId))
             // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-            accessTokenId ? navigation.navigate('HostDashboard') : false
+            accessTokenId ? navigation.navigate('HostNavigator') : false
         }
     }, [navigation, response])
 

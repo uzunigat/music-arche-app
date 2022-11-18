@@ -8,9 +8,12 @@ export const counterSlice = createSlice({
     reducers: {
         setId: (state, action: PayloadAction<string>) => {
             state.id = action.payload
+        },
+        clearToken: (state) => {
+            state = initialState
         }
     }
 })
 
-export const { setId } = counterSlice.actions
+export const { setId, clearToken } = counterSlice.actions
 export default counterSlice.reducer

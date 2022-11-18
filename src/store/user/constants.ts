@@ -6,8 +6,12 @@ const initialState = {
     href: '',
     spotifyId: '',
     tokenId: '',
-    createdAt: '',
-    updatedAt: ''
+    externalUrlSpotify: '',
+    followersHref: '',
+    followersTotal: 0,
+    type: '',
+    uri: '',
+    imagesUrl: ''
 } as User
 
 export { initialState }

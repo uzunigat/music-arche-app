@@ -21,8 +21,6 @@ const HostDashboard = () => {
 
     return <View style={styles.container}>
             <Text>Welcome {user.displayName}</Text>
-            <Text>Token Id:  {user.tokenId}</Text>
-
             <Image style={{width: '30%', height: '20%'}} source={{uri: user.imagesUrl}}></Image>
         </View>
 }

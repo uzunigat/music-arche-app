@@ -17,7 +17,7 @@ const Join = ({navigation}) => {
         setTokenId(tokenId)
         setUser(data)
 
-        navigation.navigate('GuestDashboard')
+        navigation.navigate('GuestNavigator', {screen: 'GuestDashboard'})
     }
 
     return <View style={styles.container}>

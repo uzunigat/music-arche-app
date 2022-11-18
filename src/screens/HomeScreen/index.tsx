@@ -6,12 +6,11 @@ import * as WebBrowser from 'expo-web-browser'
 
 import { styles } from './style'
 import { useAppDispatch, useAppSelector } from '../../store/hooks'
-import { setId } from '../../store'
+import { setId, setUserId } from '../../store'
 import { config } from '../../config'
 
 WebBrowser.maybeCompleteAuthSession()
 
-// import { logi } from '../../services/auth'
 const discovery = {
     authorizationEndpoint: 'https://accounts.spotify.com/authorize',
     tokenEndpoint: `${config.REACT_SERVER_URL}api/v1/auth`
@@ -51,12 +50,13 @@ const HomeScreen = ({ navigation }) => {
 
     useEffect(() => {
         if (response?.type === 'error') {
-            const { accessTokenId } = response.params
+            const { accessTokenId, userId } = response.params
 
             
             dispatcher(setId(accessTokenId))
+            dispatcher(setUserId(userId))
             // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-            accessTokenId ? navigation.navigate('Dashboard') : false
+            accessTokenId ? navigation.navigate('HostDashboard') : false
         }
     }, [navigation, response])
 
@@ -72,7 +72,7 @@ const HomeScreen = ({ navigation }) => {
             </TouchableOpacity>
 
             <TouchableOpacity
-                onPress={() => {}}
+                onPress={() => {navigation.navigate('Join')}}
                 style={styles.joinButtonContainer}
             >
                 <Text style={styles.appButtonText}>{'Join'}</Text>

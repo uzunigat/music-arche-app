@@ -10,13 +10,23 @@ export const userSlicer = createSlice({
         setUser: (state, action: PayloadAction<User>) => {
             state.id = action.payload.id
             state.displayName = action.payload.displayName
-            state.href = action.payload.href
             state.spotifyId = action.payload.spotifyId
+            state.tokenId = action.payload.tokenId
+            state.externalUrlSpotify = action.payload.externalUrlSpotify
+            state.followersHref = action.payload.followersHref
+            state.followersTotal = action.payload.followersTotal
+            state.href = action.payload.href
+            state.type = action.payload.type
+            state.uri = action.payload.uri
+            state.imagesUrl = action.payload.imagesUrl
             state.createdAt = action.payload.createdAt
             state.updatedAt = action.payload.updatedAt
+        },
+        setUserId: (state, action: PayloadAction<string>) => {
+            state.id = action.payload
         }
     }
 })
 
-export const { setUser } = userSlicer.actions
+export const { setUser, setUserId } = userSlicer.actions
 export default userSlicer.reducer

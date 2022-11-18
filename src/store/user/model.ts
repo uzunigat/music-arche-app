@@ -1,11 +1,17 @@
 type User = {
-    id: string
+    id?: string
     displayName: string
-    href: string
-    spotifyId: string
     tokenId: string
-    createdAt: string
-    updatedAt: string
+    spotifyId: string
+    externalUrlSpotify: string
+    followersHref: unknown | null
+    followersTotal: number
+    href: string
+    type: string
+    uri: string
+    imagesUrl: string
+    createdAt?: Date
+    updatedAt?: Date
 }
 
 export { User }

@@ -1,13 +1,37 @@
-import { Text, View, TouchableOpacity } from 'react-native'
+import { ScrollView, Text, View } from 'react-native'
 import { useAppSelector } from '../../../store/hooks'
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { styles } from './style'
+import { Searchbar } from 'react-native-paper';
+import { useEffect, useState } from 'react';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
 
 const GuestDashboard = ({navigation}) => {
 
-    const user = useAppSelector((state) => state.user)
     const token = useAppSelector((state) => state.token)
-    const Tab = createBottomTabNavigator();
+
+    const [searchQuery, setSearchQuery] = useState('');
+    const [tracks, setTracks] = useState([])
+
+    const onChangeSearch = query => { 
+        setTracks([])
+        setSearchQuery(query)
+    }
+
+    useEffect(() => {
+        tracks.forEach((track) => {
+            console.log(track.name)
+        })
+    }, [tracks])
+
+    const searchTracks = async () => {
+        const response = await fetch(`http://localhost:3000/api/v1/search/${searchQuery}/${token.id}`, {
+            method: 'GET',
+        })
+
+        const data = await response.json() as any
+        setTracks(data)
+    }
 
     const play = async () => {
         await fetch(`http://localhost:3000/api/v1/player/${token.id}/play/`, {
@@ -21,21 +45,28 @@ const GuestDashboard = ({navigation}) => {
         })
     }
 
-    return <View style={styles.container}>
-            <TouchableOpacity
-                onPress={() => play()}
-                style={styles.joinButtonContainer}
-            >
-                <Text style={styles.appButtonText}>{'Play'}</Text>
-            </TouchableOpacity>
+    return <ScrollView>
+            <Searchbar
+                placeholder="Search"
+                onChangeText={onChangeSearch}
+                onEndEditing={searchTracks}
+                value={searchQuery}
+            />
+            {
+            tracks.map((track) => {
+                return (
+                <View style={styles.trackContainer}>
+                    <View style={styles.track}>
+                        <Text>{track.name}</Text>
+                        <Ionicons style={styles.buttonAdd} onPress={() => {console.log('Added')}} name={'add'} size={20} color={'green'} />  
+                    </View>
+                </View>)
+            })
+        }
+            <Ionicons onPress={play} name={'play'} size={20} color={'green'} />  
+            <Ionicons onPress={pause} name={'pause'} size={20} color={'red'} />  
 
-            <TouchableOpacity
-                onPress={() => pause()}
-                style={styles.joinButtonContainer}
-            >
-                <Text style={styles.appButtonText}>{'Pause'}</Text>
-            </TouchableOpacity>
-        </View>
+        </ScrollView>
 }
 
 export default GuestDashboard

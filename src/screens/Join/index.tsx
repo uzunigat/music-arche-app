@@ -9,9 +9,7 @@ const Join = ({navigation}) => {
     const join = async () => {
         console.log(tokenId)
 
-        const response = await fetch(`http://localhost:3000/api/v1/user/${tokenId}`, {
-            method: 'GET',
-        })
+        const response = await fetch(`http://localhost:3000/api/v1/user/${tokenId}`)
 
         const data = await response.json()
         setTokenId(tokenId)

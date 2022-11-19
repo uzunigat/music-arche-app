@@ -1,7 +1,7 @@
-import { View, Text } from 'react-native'
+import { View } from 'react-native'
 import React from 'react'
 import { useAppSelector } from '../../../store/hooks'
-import { Avatar, Button, Card, Title, Paragraph } from 'react-native-paper';
+import { Card, Title, Paragraph } from 'react-native-paper';
 
 
 export default function GuestHost() {

@@ -4,10 +4,9 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center'
+        alignItems: 'center'
     },
-    loginButtonContainer: {
+    playButton: {
         elevation: 8,
         backgroundColor: '#009688',
         borderRadius: 10,
@@ -15,7 +14,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 12,
         marginVertical: 10
     },
-    joinButtonContainer: {
+    pauseButton: {
         elevation: 8,
         backgroundColor: '#0033CD',
         borderRadius: 10,
@@ -28,6 +27,24 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         alignSelf: 'center',
         textTransform: 'uppercase'
+    },
+    trackContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        width: '100%',
+        paddingHorizontal: 10,
+        paddingVertical: 10
+    },
+    track: {
+        flexDirection: 'row',
+        width: '100%',
+        height: 50,
+        backgroundColor: '#ccc',
+        borderRadius: 5
+    },
+    buttonAdd: {
+        flexDirection: 'row-reverse'
     }
 })
 

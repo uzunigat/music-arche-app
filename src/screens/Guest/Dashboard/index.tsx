@@ -1,71 +1,37 @@
 import { ScrollView, Text, View } from 'react-native'
 import { useAppSelector } from '../../../store/hooks'
-import { styles } from './style'
-import { Searchbar } from 'react-native-paper';
-import { useEffect, useState } from 'react';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import { useState, useEffect } from 'react';
+import Song from '../../../components/Song/index';
+import useSWR from 'swr';
 
 
-const GuestDashboard = ({navigation}) => {
+const GuestDashboard = ({}) => {
 
     const token = useAppSelector((state) => state.token)
+    const [queue, setQueue] = useState({} as any)
 
-    const [searchQuery, setSearchQuery] = useState('');
-    const [tracks, setTracks] = useState([])
+    const getData = async () => {
+        const response = await fetch(`http://localhost:3000/api/v1/player/${token.id}/queue`)
+        const data = await response.json()
 
-    const onChangeSearch = query => { 
-        setTracks([])
-        setSearchQuery(query)
-    }
-
-    useEffect(() => {
-        tracks.forEach((track) => {
-            console.log(track.name)
-        })
-    }, [tracks])
-
-    const searchTracks = async () => {
-        const response = await fetch(`http://localhost:3000/api/v1/search/${searchQuery}/${token.id}`, {
-            method: 'GET',
+        setQueue({
+            currentlyPlaying: data.currently_playing,
+            queue: data.queue
         })
 
-        const data = await response.json() as any
-        setTracks(data)
+        return data
     }
 
-    const play = async () => {
-        await fetch(`http://localhost:3000/api/v1/player/${token.id}/play/`, {
-            method: 'PUT',
-        })
-    }
+    const {error} = useSWR(`http://localhost:3000/api/v1/player/${token.id}/queue`, getData, {refreshInterval: 500}) 
 
-    const pause = async () => {
-        await fetch(`http://localhost:3000/api/v1/player/${token.id}/pause`, {
-            method: 'PUT',
-        })
-    }
 
     return <ScrollView>
-            <Searchbar
-                placeholder="Search"
-                onChangeText={onChangeSearch}
-                onEndEditing={searchTracks}
-                value={searchQuery}
-            />
             {
-            tracks.map((track) => {
-                return (
-                <View style={styles.trackContainer}>
-                    <View style={styles.track}>
-                        <Text>{track.name}</Text>
-                        <Ionicons style={styles.buttonAdd} onPress={() => {console.log('Added')}} name={'add'} size={20} color={'green'} />  
-                    </View>
-                </View>)
-            })
-        }
-            <Ionicons onPress={play} name={'play'} size={20} color={'green'} />  
-            <Ionicons onPress={pause} name={'pause'} size={20} color={'red'} />  
-
+                queue.currentlyPlaying ? 
+                            <Song track={queue.currentlyPlaying}/>
+                    : 
+                    <Text>Nothing is playing</Text>
+            }
         </ScrollView>
 }
 

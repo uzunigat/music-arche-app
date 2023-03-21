@@ -1,6 +1,7 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HostDashboard from "../screens/Host/Dashboard";
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import HostShare from '../screens/Host/Share/index';
 
 const Tab = createBottomTabNavigator()
 
@@ -21,9 +22,9 @@ export default function HostNavigator({navigation}) {
               if (route.name === 'HostDashboard') {
                 iconName = focused
                   ? 'home'
-                  : 'ios-information-circle-outline';
-              } else if (route.name === 'Settings') {
-                iconName = focused ? 'ios-list' : 'ios-list-outline';
+                  : 'home-outline';
+              } else if (route.name === 'HostShare') {
+                iconName = focused ? 'ios-share' : 'ios-share-outline';
               }
   
               // You can return any component that you like here!
@@ -35,6 +36,9 @@ export default function HostNavigator({navigation}) {
             <Tab.Screen name="HostDashboard" component={HostDashboard} options={{
                 title: 'Home',
                 }}/>
+            <Tab.Screen name="HostShare" component={HostShare} options={{
+                title: 'Share',
+            }}/>
         </Tab.Navigator>
     )
 }

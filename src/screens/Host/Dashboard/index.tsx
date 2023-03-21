@@ -10,12 +10,13 @@ const HostDashboard = () => {
     const dispatcher = useAppDispatch()
 
     useEffect(() => {
+        
         (async () => {
-            const response = await fetch(`http://localhost:3000/api/v1/user/${token.id}`)
+            const response = await fetch(`http://localhost:3000/api/v1/user/${user.id}`)
             const userResponse = (await response.json()).data
 
             dispatcher(setUser(userResponse))
-            console.log(userResponse.tokenId)
+            console.log(`@@ TokenID: ${userResponse.tokenId}`)
         })()
     },[])
 

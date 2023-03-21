@@ -3,6 +3,7 @@ import GuestDashboard from "../screens/Guest/Dashboard";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import GuestSettings from "../screens/Guest/Settings";
 import GuestHost from "../screens/Guest/Host";
+import GuestSearch from "../screens/Guest/Search";
 
 const Tab = createBottomTabNavigator()
 
@@ -30,6 +31,9 @@ export default function GuestNavigator({navigation}) {
                     case 'GuestHost':
                         iconName = focused ? 'person-circle' : 'person-circle-outline';
                         break;
+                    case 'GuestSearch':
+                        iconName = focused ? 'search' : 'search-outline';
+                        break;
               }
 
 
@@ -41,6 +45,7 @@ export default function GuestNavigator({navigation}) {
           })}
         >
             <Tab.Screen name="GuestHost" component={GuestHost} options={{ title:'Host' }}/>
+            <Tab.Screen name="GuestSearch" component={GuestSearch} options={{ title:'Search' }}/>
             <Tab.Screen name="GuestDashboard" component={GuestDashboard} options={{ title:'Home' }}/>
             <Tab.Screen name="GuestSettings" component={GuestSettings} options={{ title:'Settings' }}/>
 
